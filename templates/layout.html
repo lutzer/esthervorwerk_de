@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+    <head>
+        {% block header %}
+        {% set baseUrl = contents['index.md'].getUrl() %}
+        <title>ESTHER VORWERK</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta charset="UTF-8">
+        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=Inconsolata:400,700|Playfair+Display' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="{{ baseUrl }}css/screen.css"></link>
+        <script src="{{ baseUrl }}js/jquery.bxslider.min.js"></script>
+        <link href="{{ baseUrl }}js/jquery.bxslider.css" rel="stylesheet" />  
+        {% endblock %}
+    </head>
+    <body>
+        {% block menu %}
+        {% endblock %}
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+        {% block body %}
+        {% endblock %}
+    </body>
+    {% block script %}
+    {% endblock %}
+</html>

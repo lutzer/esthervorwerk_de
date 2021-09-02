@@ -1,0 +1,28 @@
+{
+  "locals": {
+    "url": "http://localhost:8080",
+    "name": "Esther's page",
+    "owner": "Esther Vorwerk",
+    "description": "-"
+  },
+  "baseUrl" : "/",
+  "output" : "build",
+  "plugins": [
+    "wintersmith-nunjucks",
+    "./plugins/contentHelpers.js"
+  ],
+  "require": {
+    "moment": "moment",
+    "_": "underscore",
+    "typogr": "typogr"
+  },
+  "markdown": {
+    "smartLists": true,
+    "smartypants": true
+  },
+  "nunjucks": {
+    "filterdir": "filters",
+    "filters": ["abstract","sortContentDir","match","dictToArray"]
+  },
+  "ignore": ["**/.DS_Store"]
+}

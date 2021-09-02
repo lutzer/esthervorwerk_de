@@ -1,0 +1,299 @@
+
+{% extends "layout.html" %}
+
+{% block menu %}
+<div class="site-menu hidden">
+	<div id="menu-button" class="button"></div>
+	<ul class="hidden">
+		<li><a href="#aboutpage">Esther</a></li>
+		<li><a href="#datespage">Termine</a></li>
+		<li><a href="#videopage">Showreel</a></li>
+		<li><a href="#projectpage">Projekte</a></li>
+		<li><a href="#textpage">Texte</a></li>
+		<li><a href="#contactpage">Kontakt</a></li>
+	</ul>
+</div>
+{% endblock %}
+
+{% block content %}
+	<div class="fullscreen">
+		<div id="coverpage" class="fullscreen sticked">
+		    <div class="foreground clipped">
+		        <div class="foregroundImage">
+		        </div>
+
+		        <div class="copyright">
+		        	&copy; {{ page.metadata.photographer }}
+		        </div>
+		    </div>
+		    <div class="title">
+		        <img src="images/title.png"/>
+		    </div>
+		    <a href="#aboutpage">
+		        <div id="click-dummy">
+
+		        </div>
+		    </a>
+		    <div class="arrow-down">
+				<p>MEHR</p>
+			</div>
+			<div class="footer">
+			    <div class="center">{{ page.metadata.footer }}</div>
+			</div>	
+		</div>
+	</div>
+	<div id="aboutpage" class="fullscreen">
+		<div>
+			{% set about = contents['about.md'] %}
+			<div class="title">
+				<img src="images/circle2.png">
+				<h1>{{ about.metadata.title }}</h1>
+				<p>{{ about.metadata.subtitle }}<p>
+			</div>
+			<div class="text column">
+			{{ about.html | safe }}
+			</div>
+		</div>
+	</div>
+	<div id="datespage" class="fullscreen">
+		<div>
+			<div class="line column"></div>
+			{% set termine = contents['termine.md'] %}
+			<div class="title">
+				<h1>{{ termine.metadata.title }}</h1>
+				<p>{{ termine.metadata.subtitle }}<p>
+			</div>
+			<div class="text column">
+			{{ termine.html | safe }}
+			</div>
+		</div>
+	</div>
+	<div id="videopage" class="fullscreen">
+		<div>
+			<div class="line column"></div>
+			{% set videos = contents['videos.md'] %}
+			<div class="title">
+				<h1>{{ videos.metadata.title }}</h1>
+				<p>{{ videos.metadata.subtitle }}<p>
+			</div>
+			<div class="text column">
+			{{ videos.html | safe }}
+			</div>
+		</div>
+	</div>
+	<div id="projectpage" class="fullscreen">
+		<div>
+			<div class="line column"></div>
+			{% set workpage = contents['projects.md'] %}
+			<div class="title">
+				<h1>{{ workpage.metadata.title }}</h1>
+				<p>{{ workpage.metadata.subtitle }}</p>
+			</div>
+			<div class="text column">
+				<ul class="item-list">
+					{% set projects = contents['projects'] %}
+					{% for project in projects | dictToArray | sortContentDir('index.md','date') | reverse %}
+					<li id="project_{{ project.key }}">
+						<a href="projects/{{ project.key }}/">
+						<h2>{{ project['index.md'].metadata.title }}</h2>
+						{% if (project['index.md'].metadata.thumbnail) %}
+						<img src="projects/{{ project.key }}/{{ project['index.md'].metadata.thumbnail }}">
+						{% endif %}
+						<p>
+						{{ project['index.md'].markdown | abstract }}
+						</p>
+						<p><b>Read more...</b></p>
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="textpage" class="fullscreen">
+		<div>
+			{% set textpage = contents['texts.md'] %}
+			<div class="line column"></div>
+			<div class="title">
+				<h1>{{ textpage.metadata.title }}</h1>
+				<p>{{ textpage.metadata.subtitle }}</p>
+			</div>
+			<div class="text column">
+				<ul class="item-list">
+					{% set texts = contents['texts'] %}
+					{% for text in texts | dictToArray | sortContentDir('index.md','date') | reverse %}
+					<li id="text_{{ text.key }}">
+						<a href="texts/{{ text.key }}/">
+						<h2>{{ text['index.md'].metadata.title }}</h2>
+						<p>
+						{{ text['index.md'].markdown | abstract }}
+						</p>
+						<p><b>Read more...</b></p>
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="contactpage" class="fullscreen">
+		<div>
+			<div class="line column"></div>
+			{% set contact = contents['contact.md'] %}
+			<div class="title">
+				<h1>{{ contact.metadata.title }}</h1>
+				<p>{{ contact.metadata.subtitle }}<p>
+			</div>
+			<div class="text column center">
+			{{ contact.html | safe }}
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block body %}
+	<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
+        <defs>
+            <clipPath clipPathUnits="objectBoundingBox" id="triangle-down">
+                <polygon points=".50 .85, .50 .85, .80 .10, .20 .10">
+                    <animate id="triangle-anim-expand" begin="indefinite" restart="whenNotActive" fill="freeze" attributeName="points" dur="300ms" to=".50 .86, .50 .86, .81 .09, .19 .09" />
+                    <animate id="triangle-anim-contract" begin="indefinite" restart="whenNotActive" fill="freeze" attributeName="points" dur="300ms" to=".50 .85, .50 .85, .80 .10, .20 .10" />
+                </polygon>
+            </clipPath>
+            <clipPath clipPathUnits="objectBoundingBox" id="triangle-down-big">
+                <polygon points=".50 .85, .50 .85, .70 .10, .30 .10">
+                    <animate id="triangle-big-anim-expand" begin="indefinite" restart="whenNotActive" fill="freeze" attributeName="points" dur="300ms" to=".50 .86, .50 .86, .71 .09, .29 .09" />
+                    <animate id="triangle-big-anim-contract" begin="indefinite" restart="whenNotActive" fill="freeze" attributeName="points" dur="300ms" to=".50 .85, .50 .85, .70 .10, .30 .10" />
+                </polygon>
+            </clipPath>
+            <clipPath clipPathUnits="objectBoundingBox" id="triangle-max">
+                <polygon points=".50 .85, .50 .85, .80 .10, .20 .10">
+                    <animate id="triangle-anim-maximize" begin="indefinite" restart="whenNotActive" fill="freeze" attributeName="points" dur="300ms" to="0 2.0, 1 2.0,1 0, 0 0" />
+                </polygon>
+            </clipPath>
+        </defs>
+    </svg>
+{% endblock %}
+
+{% block script %}
+	<script>
+		/* vars */
+		//check browser type
+        var isFirefox = navigator.userAgent.search("Firefox") >= 0;
+
+		/* rot13 decode email adress */
+		function getMailAddress() {
+		    var string = "rfgure.ibejrex@tzk.arg".replace(/[a-zA-Z]/g, function(c) {
+		        return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);
+		    });
+		    return string;
+		}
+
+		/* event handlers */
+		$('#click-dummy').on('mouseenter',function() {
+		   	showEsther(true);
+		});
+		$('#click-dummy').on('mouseleave',function() {
+		   	showEsther(false);
+		});
+		$('#click-dummy').on('click', function(event) {
+			event.preventDefault();
+
+			$('html,body').animate({ scrollTop: $('#aboutpage').offset().top },'slow');
+		});
+
+		$('#menu-button').on('click', function(event) {
+			$('.site-menu ul').toggleClass('hidden');
+		});
+		$('.site-menu a').on('click', function(event) {
+			event.preventDefault();
+			$('.site-menu ul').addClass('hidden');
+			//scroll to target
+			$('html,body').animate(
+				{ scrollTop: $(event.currentTarget.hash).offset().top },
+				{
+					complete: function() {
+						window.location.hash = event.currentTarget.hash;
+				}
+			});
+		});
+
+		function showEsther(show) {
+
+			if (show) {
+				$('#coverpage .foreground').addClass('animate');
+			    $('#coverpage .title').addClass('animate');
+			    $('#coverpage .footer').addClass('animate');
+			    $('#coverpage .arrow-down').addClass('animate');
+
+				if (isFirefox)
+	                $('#triangle-anim-maximize')[0].beginElement();
+
+			} else {
+				$('#coverpage .foreground').removeClass('animate');
+			    $('#coverpage .title').removeClass('animate');
+			    $('#coverpage .footer').removeClass('animate');
+			    $('#coverpage .arrow-down').removeClass('animate');
+			}
+
+		}
+
+		function onResize() {
+		    var w = window.innerWidth,
+		        h = window.innerHeight;
+
+		    $('.fullscreen').css("min-height",h);
+		};
+
+		function startTriangleLoop() {
+		    // start random bli
+		    setInterval(function() {
+		        $('#coverpage .foreground').addClass('loop');
+		        if (isFirefox) {
+                    $('#triangle-anim-expand')[0].beginElement();
+                    $('#triangle-big-anim-expand')[0].beginElement();
+                }
+		    },1300);
+		    setInterval(function() {
+		        $('#coverpage .foreground').removeClass('loop');
+		        if (isFirefox) {
+                    $('#triangle-anim-contract')[0].beginElement();
+                    $('#triangle-big-anim-contract')[0].beginElement();
+                }
+		    },1700);
+		}
+
+		/* scroll handler */
+		$(window).on('scroll', function() {
+		    if ( $(window).scrollTop() > $('#coverpage').offset().top)  {
+		        showEsther(false);
+		    }
+		    if ( $(window).scrollTop() >= $('#aboutpage').offset().top )
+		    	$('.site-menu').removeClass('hidden')
+		    else
+		    	$('.site-menu').addClass('hidden')
+		});
+
+		$(window).on('resize',onResize);
+
+		var slider;
+
+		$( document ).ready(function() {
+		    onResize();
+
+		    startTriangleLoop();
+
+		    slider = $('.bxslider').bxSlider({
+		    	captions: true,
+		    	adaptiveHeight: true
+		    });
+
+		    $('#email').attr('href','mailto:'+getMailAddress());
+		    $('#email').html(getMailAddress());
+		});
+
+		$(window).load(function() {
+		    slider.reloadSlider();
+		});
+	</script>
+{% endblock %}

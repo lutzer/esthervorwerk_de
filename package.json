@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "moment": "2.3.x",
+    "nunjucks": "^2.2.0",
+    "typogr": "0.5.x",
+    "underscore": "1.4.x",
+    "wintersmith-nunjucks": "^1.0.1",
+    "wintersmith-nunjucks-content": "^0.2.0"
+  },
+  "private": "true"
+}
